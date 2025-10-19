@@ -6,7 +6,7 @@ if(isset($_SESSION['user_id'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +27,7 @@ if(isset($_SESSION['user_id'])) {
                 <label for="password"> PASSWORD</label>
                 <input type="password" id="password" name="password" required>
                 <p class= "register-link">  
-                    Not a user? <a href="register.php">Register now</a>
+                    Not a user? <a href="Registration.php">Register now</a>
                 </p>
                 <button type="submit">LOGIN</button>    
             </form>
