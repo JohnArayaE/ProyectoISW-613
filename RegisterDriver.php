@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registro — Aventones</title>
+  <title>Registro Conductor — Aventones</title>
   <link rel="stylesheet" href="css/registration.css">
   <script src="js/registration.js" defer></script>
 </head>
@@ -76,11 +76,11 @@
           </div>
 
           <!-- Rol oculto -->
-          <input type="hidden" name="rol" value="CONDUCTOR">
+          <input type="hidden" name="rol" value="CHOFER">
 
           <!-- Botón -->
           <div class="actions span-2">
-            <button type="submit">Sign Up</button>
+            <button type="submit">Sign Up as Driver</button>
           </div>
 
           <div class="links-row span-2">
@@ -90,7 +90,7 @@
             <p class="registerCustomer-link">
                 Register as a Customer? <a href="Registration.php">Click here</a>
             </p>
-            </div>
+          </div>
         </div>
       </form>
     </div>
