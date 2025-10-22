@@ -66,6 +66,15 @@ body{
   color: var(--color-primario);
 }
 
+/* ===== Subtítulo (Register Driver) ===== */
+.section-title{
+  text-align: center;
+  color: var(--color-blanco);
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 6px 0 18px;
+}
+
 /* ===== Form (2 columnas) ===== */
 .form{
   width: 100%;
@@ -113,8 +122,6 @@ input[type="tel"]{
   outline: none;
   font-size: 20px;
 }
-
-
 
 /* ===== Foto ===== */
 .photo-section{
@@ -181,33 +188,40 @@ button[type="submit"]:hover{
 button[type="submit"]:active{
   transform: translateY(1px);
 }
+
+/* ===== Links fila ===== */
+/* ===== Links fila (funciona en Registration y RegisterDriver) ===== */
 .links-row{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   margin-top: 12px;
-  gap: 10px;
 }
-/* ===== Links ===== */
+
+/* Texto de ambos lados */
 .login-link,
+.registerCustomer-link,
 .registerDriver-link{
+  flex: 1;
   text-align: center;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #fff;
+  color: #fff;  /* texto blanco para "Already a user?" y "Register as..." */
   margin-top: 6px;
 }
 
-.login-link a,
-.registerDriver-link a{
-  color: #fff;
+/* Enlaces en todos los estados comunes */
+.links-row a:link,
+.links-row a:visited{
+  color: #fff;              /* blanco incluso si ya se visitó */
   text-decoration: none;
   padding: 2px 8px;
   border-radius: 6px;
 }
 
-.login-link a:hover,
-.registerDriver-link a:hover{
+.links-row a:hover,
+.links-row a:active{
+  color: var(--color-primario);   /* verde neón al pasar o hacer clic */
   text-decoration: underline;
-  color: #baff39;
 }
