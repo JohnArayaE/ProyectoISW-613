@@ -49,6 +49,9 @@ $rides = [];
 if ($result) {
     $rides = $result->fetch_all(MYSQLI_ASSOC);
 }
+
+// Foto desde sesión con default
+$foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : 'img/logo.png';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -68,16 +71,39 @@ if ($result) {
                     <i class="fas fa-car logo-icon"></i>
                     <h1 class="logo-text">AVENTONES</h1>
                 </div>
+                
+                <!-- Navegación central -->
                 <nav class="nav-menu">
-                    <?php if(isset($_SESSION['user_id'])): ?>
-                        <span class="user-greeting">Hola, <?php echo $_SESSION['user_nombre']; ?></span>
-                        <a href="dashboard.php" class="btn btn-primary">Mi Cuenta</a>
-                        <a href="actions/logout.php" class="btn btn-danger">Cerrar Sesión</a>
-                    <?php else: ?>
-                        <a href="Login.php" class="btn btn-primary">Iniciar Sesión</a>
-                        <a href="Registration.php" class="btn btn-outline">Registrarse</a>
-                    <?php endif; ?>
+                    <a href="index.php" class="nav-link active">Home</a>
+                    <a href="#" class="nav-link">Bookings</a>
                 </nav>
+
+                <!-- Menú de usuario -->
+                <div class="user-menu">
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <div class="profile-menu">
+                            <?php
+                            // Verificar si el archivo existe, si no usar logo
+                            if (!file_exists($foto_usuario)) {
+                                $foto_usuario = 'img/logo.png';
+                            }
+                            ?>
+                            <img src="<?php echo $foto_usuario; ?>" alt="User Icon" class="avatar" id="avatarBtn" 
+                                 onerror="this.src='img/logo.png'" />
+                            <ul class="dropdown" id="profileDropdown">
+                                <li><a href="index.php" class="dropdown-link">Home</a></li>
+                                <li><a href="#" class="dropdown-link">Bookings</a></li>
+                                <li><a href="#" class="dropdown-link">Configurations</a></li>
+                                <li><a href="actions/logout.php" class="dropdown-link logout-btn">Logout</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                        <div class="auth-buttons">
+                            <a href="Login.php" class="btn btn-primary">Iniciar Sesión</a>
+                            <a href="Registration.php" class="btn btn-outline">Registrarse</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </header>
@@ -209,7 +235,38 @@ if ($result) {
         </div>
     </footer>
 
-    <script src="js/index.js"></script>
+    <script>
+        // Script para el menú desplegable del avatar
+        document.addEventListener('DOMContentLoaded', function() {
+            const avatarBtn = document.getElementById('avatarBtn');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            if (avatarBtn && profileDropdown) {
+                avatarBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    profileDropdown.classList.toggle('show');
+                });
+
+                document.addEventListener('click', function() {
+                    profileDropdown.classList.remove('show');
+                });
+
+                profileDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // Ordenamiento
+            const ordenSelect = document.getElementById('ordenSelect');
+            if (ordenSelect) {
+                ordenSelect.addEventListener('change', function() {
+                    const url = new URL(window.location);
+                    url.searchParams.set('orden', this.value);
+                    window.location.href = url.toString();
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <?php $conn->close(); ?>
