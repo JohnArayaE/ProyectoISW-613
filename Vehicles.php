@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Verificar si el usuario está logueado y es chofer
+if (!isset($_SESSION['user_id']) || $_SESSION['user_rol'] !== 'CHOFER') {
+    header('Location: Login.php');
+    exit();
+}
+
+// Foto desde sesión con default root-relative
+$foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : '/img/logo.png';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +19,6 @@
   <link rel="stylesheet" href="css/vehicles.css" />
 </head>
 <body class="veh-page">
-
   <!-- ===== Header ===== -->
   <header class="veh-topbar">
     <!-- Izquierda: logo + título -->
@@ -25,18 +36,24 @@
       </ul>
     </nav>
 
-    <!-- Derecha: CTA + avatar -->
-    <div class="right-box">
-      <button id="btnNew" class="btn neon">+ New Vehicle</button>
-
-      <div class="profile-menu">
-        <img src="img/logo.png" alt="User Icon" class="avatar" id="avatarBtn" />
-        <ul class="dropdown" id="profileDropdown">
-          <li><a href="Registration.php">Register</a></li>
-          <li><a href="Login.php">Login</a></li>
-        </ul>
-      </div>
-    </div>
+    <!-- Derecha: avatar -->
+    <div class="profile-menu">
+    <?php
+    $foto_usuario = isset($_SESSION['user_foto']) ? $_SESSION['user_foto'] : 'img/logo.png';
+    
+    // Verificar si el archivo existe, si no usar logo
+    if (!file_exists($foto_usuario)) {
+        $foto_usuario = 'img/logo.png';
+    }
+    ?>
+    
+    <img src="<?php echo $foto_usuario; ?>" alt="User Icon" class="avatar" id="avatarBtn" 
+         onerror="this.src='img/logo.png'" />
+    <ul class="dropdown" id="profileDropdown">
+        <li><a href="actions/logout.php" class="logout-btn">Logout</a></li>
+        <li><a href="" class="">Configuration</a></li>
+    </ul>
+</div>
   </header>
 
   <!-- ===== Contenido ===== -->
@@ -75,7 +92,6 @@
           <button class="btn danger" data-delete="1">Delete</button>
         </footer>
       </article>
-      <!-- /tarjeta -->
     </section>
   </main>
 
@@ -136,33 +152,28 @@
   <footer class="veh-footer">
     <div class="footer-links">
       <a href="">Home</a> |
-      <a href="Myrides.html" data-role-only="driver">Rides</a> |
-      <a href="login.html">Login</a> |
-      <a href="Registration.php">Register</a>
+      <a href="">Bookings</a> |
+      <a href="" data-role-only="driver">Rides</a> |
     </div>
     <p>&copy; Aventones.com</p>
   </footer>
 
-  <!--  Esto ira en el js de Vehicles (Recordar) -->
+  <!-- JS del menú del avatar -->
   <script>
-    // JavaScript para el menú desplegable del avatar
     document.addEventListener('DOMContentLoaded', function() {
       const avatarBtn = document.getElementById('avatarBtn');
       const profileDropdown = document.getElementById('profileDropdown');
-      
+
       if (avatarBtn && profileDropdown) {
-        // Toggle del menú al hacer clic en el avatar
         avatarBtn.addEventListener('click', function(e) {
           e.stopPropagation();
           profileDropdown.classList.toggle('show');
         });
-        
-        // Cerrar el menú al hacer clic fuera de él
+
         document.addEventListener('click', function() {
           profileDropdown.classList.remove('show');
         });
-        
-        // Prevenir que el menú se cierre al hacer clic dentro de él
+
         profileDropdown.addEventListener('click', function(e) {
           e.stopPropagation();
         });

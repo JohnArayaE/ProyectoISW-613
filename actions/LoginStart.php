@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contrasena = $_POST['contrasena'];
 
     // Buscar usuario por correo
-    $sql = "SELECT id, nombre, apellido, correo, contrasena_hash, rol, estado FROM usuarios WHERE correo = '$correo'";
+    $sql = "SELECT * FROM usuarios WHERE correo = '$correo'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_apellido'] = $usuario['apellido'];
                 $_SESSION['user_correo'] = $usuario['correo'];
                 $_SESSION['user_rol'] = $usuario['rol'];
+                $_SESSION['user_foto'] = $usuario['foto_ruta'];  
                 
                 // Redireccionar según el rol
                 if ($usuario['rol'] === 'CHOFER') {

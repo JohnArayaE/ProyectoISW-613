@@ -30,19 +30,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash de contraseña
     $contrasena_hash = password_hash($contrasena, PASSWORD_BCRYPT);
 
-    // Manejo de foto
-    $foto_ruta = null;
-    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-        $foto_nombre = uniqid() . '_' . basename($_FILES['photo']['name']);
-        $foto_ruta = '../uploads/' . $foto_nombre;
-        
-        if (!file_exists('../uploads')) {
-            mkdir('../uploads', 0777, true);
-        }
-        
-        move_uploaded_file($_FILES['photo']['tmp_name'], $foto_ruta);
+   // Manejo de foto
+$foto_ruta = null;
+if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+    $foto_nombre = uniqid() . '_' . basename($_FILES['photo']['name']);
+    $foto_ruta = 'uploads/' . $foto_nombre;  
+    
+    if (!file_exists('../uploads')) {
+        mkdir('../uploads', 0777, true);
     }
-
+    
+   
+    move_uploaded_file($_FILES['photo']['tmp_name'], '../' . $foto_ruta);
+}
     // Insertar usuario
     $sql = "INSERT INTO usuarios (nombre, apellido, fecha_nacimiento, cedula, correo, telefono, foto_ruta, contrasena_hash, rol, estado) 
             VALUES ('$nombre', '$apellido', '$fecha_nacimiento', '$cedula', '$correo', '$telefono', '$foto_ruta', '$contrasena_hash', '$rol', 'PENDIENTE')";
@@ -109,7 +109,7 @@ function enviarCorreoVerificacion($correo_destino, $nombre, $token) {
         $mail->isHTML(true);
         $mail->Subject = 'Verifica tu cuenta - Aventones';
         
-        $url_activacion = "http://localhost/ProyectoISW-613/actions/activateAccount.php?token=" . $token;
+       $url_activacion = "http://localhost:8080/ProyectoISW/ProyectoISW-613/actions/activateAccount.php?token=" . $token;
         
         $mail->Body = "
         <html>

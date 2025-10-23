@@ -194,6 +194,18 @@ body{
   padding-left: 20px;
 }
 
+/* Estilos específicos para el botón de logout */
+.dropdown .logout-btn {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.dropdown .logout-btn:hover {
+  background-color: #dc3545;
+  color: white;
+  padding-left: 16px;
+}
+
 /* ===== Content ===== */
 .veh-content{
   max-width: 1200px;
