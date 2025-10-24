@@ -16,25 +16,13 @@ if ($result) {
     $usuarios = $result->fetch_all(MYSQLI_ASSOC);
 }
 
-// Procesar cambio de estado de usuario
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_estado'])) {
-    $usuario_id = $_POST['usuario_id'];
-    $nuevo_estado = $_POST['nuevo_estado'];
-    
-    $update_sql = "UPDATE usuarios SET estado = ? WHERE id = ?";
-    $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("si", $nuevo_estado, $usuario_id);
-    
-    if ($stmt->execute()) {
-        $mensaje = "Estado actualizado correctamente";
-    } else {
-        $error = "Error al actualizar el estado";
-    }
-    
-    // Recargar la página para ver los cambios
-    header("Location: Admin_Dashboard.php");
-    exit();
-}
+// Mostrar mensajes de sesión
+$mensaje = $_SESSION['mensaje'] ?? null;
+$error = $_SESSION['error'] ?? null;
+
+// Limpiar mensajes de sesión después de mostrarlos
+unset($_SESSION['mensaje']);
+unset($_SESSION['error']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -125,12 +113,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_estado'])) {
             <div class="users-section">
                 <h2 class="section-title">Gestión de Usuarios</h2>
                 
-                <?php if (isset($mensaje)): ?>
-                    <div class="alert-success"><?php echo $mensaje; ?></div>
+                <?php if ($mensaje): ?>
+                    <div class="alert alert-success"><?php echo $mensaje; ?></div>
                 <?php endif; ?>
                 
-                <?php if (isset($error)): ?>
-                    <div class="alert-error"><?php echo $error; ?></div>
+                <?php if ($error): ?>
+                    <div class="alert alert-error"><?php echo $error; ?></div>
                 <?php endif; ?>
 
                 <div class="users-table-container">
@@ -167,16 +155,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_estado'])) {
                                             </span>
                                         </td>
                                         <td>
-                                            <form method="POST" class="status-form">
+                                            <form method="POST" action="actions/changeUserStatus.php" class="status-form">
                                                 <input type="hidden" name="usuario_id" value="<?php echo $usuario['id']; ?>">
                                                 <?php if ($usuario['estado'] === 'ACTIVO' || $usuario['estado'] === 'PENDIENTE'): ?>
                                                     <input type="hidden" name="nuevo_estado" value="INACTIVO">
-                                                    <button type="submit" name="cambiar_estado" class="btn btn-danger btn-sm">
+                                                    <button type="submit" class="btn btn-danger btn-sm" 
+                                                            onclick="return confirm('¿Estás seguro de que quieres desactivar este usuario?')">
                                                         <i class="fas fa-ban btn-icon"></i>Desactivar
                                                     </button>
                                                 <?php else: ?>
                                                     <input type="hidden" name="nuevo_estado" value="ACTIVO">
-                                                    <button type="submit" name="cambiar_estado" class="btn btn-success btn-sm">
+                                                    <button type="submit" class="btn btn-success btn-sm"
+                                                            onclick="return confirm('¿Estás seguro de que quieres activar este usuario?')">
                                                         <i class="fas fa-check btn-icon"></i>Activar
                                                     </button>
                                                 <?php endif; ?>
