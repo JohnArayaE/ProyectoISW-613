@@ -49,7 +49,7 @@ unset($_SESSION['error']);
                     <a href="RegisterAdmin.php" class="btn btn-primary">
                         <i class="fas fa-user-plus btn-icon"></i>Crear Administrador
                     </a>
-                    <a href="EditProfile.php" class="btn btn-outline">
+                    <a href="Configurations.php" class="btn btn-outline">
                         <i class="fas fa-cog btn-icon"></i>Configuración
                     </a>
                     <a href="actions/logout.php" class="btn btn-danger">
