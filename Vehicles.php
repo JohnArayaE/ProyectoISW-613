@@ -37,6 +37,10 @@ $foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : '/img/
     </nav>
 
     <!-- Derecha: avatar -->
+     <!-- Derecha: botón New Vehicle + avatar -->
+  <div class="right-box">
+    <a href="CreateVehicle.php" class="btn neon">New Vehicle</a>
+    
     <div class="profile-menu">
     <?php
     $foto_usuario = isset($_SESSION['user_foto']) ? $_SESSION['user_foto'] : 'img/logo.png';
@@ -53,8 +57,9 @@ $foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : '/img/
         <li><a href="actions/logout.php" class="logout-btn">Logout</a></li>
         <li><a href="" class="">Configuration</a></li>
     </ul>
-</div>
-  </header>
+    </div>
+  </div>
+</header>
 
   <!-- ===== Contenido ===== -->
   <main class="veh-content">
