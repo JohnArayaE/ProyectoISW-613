@@ -19,9 +19,9 @@ if (!file_exists($foto_usuario)) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/CreateVehicle.css" />
-  <script src="js/CreateVehicle.js"></script>
   <title>Aventones — Add Vehicle</title>
+  <link rel="stylesheet" href="css/CreateVehicle.css" />
+  <script src="js/CreateVehicle.js" defer></script>
 </head>
 <body class="create-vehicle-page">
   <!-- ===== Header ===== -->
@@ -29,7 +29,7 @@ if (!file_exists($foto_usuario)) {
     <!-- Izquierda: logo + título -->
     <div class="veh-brand">
       <img class="veh-logo" src="img/logo.png" alt="Aventones logo">
-      <h1>New Vehicle</h1>
+      <h1>Add New Vehicle</h1>
     </div>
 
     <!-- Centro: navegación -->
@@ -59,18 +59,19 @@ if (!file_exists($foto_usuario)) {
 
   <!-- ===== Contenido Principal ===== -->
   <main class="create-vehicle-main">
-    
-  <div class="form-hero simple">
-  <div class="hero-content">
-    <h1>Register Your Vehicle</h1>
-    <p>Add your vehicle details to start offering rides and earning with Aventones</p>
-  </div>
-</div>
-    <div class="form-container">
-      <!-- Mensajes dinámicos -->
-      <div id="messageContainer"></div>
+    <div class="form-hero simple">
+      <div class="hero-content">
+        <h1>Register Your Vehicle</h1>
+        <p>Add your vehicle details to start offering rides and earning with Aventones</p>
+      </div>
+    </div>
 
-      <form id="vehicleForm" method="post" enctype="multipart/form-data" class="vehicle-form">
+    <div class="form-container">
+      <!-- Mensajes del cliente (JavaScript) -->
+      <div id="clientMessage"></div>
+
+      <form id="vehicleForm" method="post" action="actions/VehiclesAc.php" enctype="multipart/form-data" class="vehicle-form">
+        <input type="hidden" name="action" value="save">
         
         <!-- Sección 1: Información Básica -->
         <div class="form-section card">
@@ -83,19 +84,17 @@ if (!file_exists($foto_usuario)) {
             <div class="field-group">
               <div class="field">
                 <label for="plate" class="field-label">
-                  <span class="label-text">License Plate</span>
-                  <span class="required">*</span>
+                  <span class="label-text">License Plate *</span>
                 </label>
-                <input type="text" id="plate" name="plate" placeholder="ABC-123" required>
+                <input type="text" id="plate" name="plate" placeholder="ABC-123" required maxlength="20">
                 <span class="field-help">Enter your vehicle's license plate number</span>
               </div>
 
               <div class="field">
                 <label for="color" class="field-label">
-                  <span class="label-text">Color</span>
-                  <span class="required">*</span>
+                  <span class="label-text">Color *</span>
                 </label>
-                <input type="text" id="color" name="color" placeholder="White" required>
+                <input type="text" id="color" name="color" placeholder="White" required maxlength="50">
                 <span class="field-help">Vehicle exterior color</span>
               </div>
             </div>
@@ -103,19 +102,17 @@ if (!file_exists($foto_usuario)) {
             <div class="field-group">
               <div class="field">
                 <label for="brand" class="field-label">
-                  <span class="label-text">Brand</span>
-                  <span class="required">*</span>
+                  <span class="label-text">Brand *</span>
                 </label>
-                <input type="text" id="brand" name="brand" placeholder="Toyota" required>
+                <input type="text" id="brand" name="brand" placeholder="Toyota" required maxlength="50">
                 <span class="field-help">Vehicle manufacturer</span>
               </div>
 
               <div class="field">
                 <label for="model" class="field-label">
-                  <span class="label-text">Model</span>
-                  <span class="required">*</span>
+                  <span class="label-text">Model *</span>
                 </label>
-                <input type="text" id="model" name="model" placeholder="Corolla" required>
+                <input type="text" id="model" name="model" placeholder="Corolla" required maxlength="50">
                 <span class="field-help">Vehicle model name</span>
               </div>
             </div>
@@ -123,17 +120,15 @@ if (!file_exists($foto_usuario)) {
             <div class="field-group">
               <div class="field">
                 <label for="year" class="field-label">
-                  <span class="label-text">Manufacturing Year</span>
-                  <span class="required">*</span>
+                  <span class="label-text">Manufacturing Year *</span>
                 </label>
-                <input type="number" id="year" name="year" min="1980" max="2099" step="1" placeholder="2020" required>
+                <input type="number" id="year" name="year" min="1980" max="<?php echo date('Y') + 1; ?>" step="1" placeholder="2020" required>
                 <span class="field-help">Year the vehicle was manufactured</span>
               </div>
 
               <div class="field">
                 <label for="seats" class="field-label">
-                  <span class="label-text">Seating Capacity</span>
-                  <span class="required">*</span>
+                  <span class="label-text">Seating Capacity *</span>
                 </label>
                 <input type="number" id="seats" name="seats" min="1" max="9" placeholder="4" required>
                 <span class="field-help">Total seats including driver</span>
@@ -152,9 +147,11 @@ if (!file_exists($foto_usuario)) {
           <div class="photo-section">
             <div class="photo-upload-card">
               <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📷</div>
                 <div class="upload-content">
                   <h4>Upload Vehicle Photo</h4>
                   <p>Click to browse or drag & drop</p>
+                  <span class="file-types">PNG, JPG, JPEG up to 5MB</span>
                 </div>
                 <input type="file" id="photo" name="photo" accept="image/*" class="file-input">
               </div>
@@ -181,7 +178,7 @@ if (!file_exists($foto_usuario)) {
             Cancel
           </a>
           <button type="submit" class="btn neon large" id="submitBtn">
-           
+            <span>🚗</span>
             Create Vehicle
           </button>
         </div>
@@ -189,7 +186,7 @@ if (!file_exists($foto_usuario)) {
     </div>
   </main>
 
-  <!-- ===== Footer ===== -->
+  <!--  Footer -->
   <footer class="veh-footer">
     <div class="footer-content">
       <div class="footer-links">
@@ -201,6 +198,5 @@ if (!file_exists($foto_usuario)) {
       <p>&copy; 2024 Aventones.com - Connecting drivers and passengers</p>
     </div>
   </footer>
-
 </body>
 </html>
