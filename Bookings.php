@@ -113,7 +113,11 @@ $foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : 'img/l
       <?php if ($user_role === 'PASAJERO'): ?>
         <a href="index.php" class="btn neon">Find Rides</a>
       <?php else: ?>
+<<<<<<< HEAD
         <a href="CreateRide.php" class="btn neon">New Ride</a>
+=======
+        <a href="create_ride.php" class="btn neon">New Ride</a>
+>>>>>>> 33644d9d106479104d10ed3c0f335aa254940175
       <?php endif; ?>
       
       <div class="profile-menu">
@@ -149,7 +153,11 @@ $foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : 'img/l
         <?php if ($user_role === 'PASAJERO'): ?>
           <a href="index.php" class="btn neon ghost">Find Rides</a>
         <?php else: ?>
+<<<<<<< HEAD
           <a href="CreateRide.php" class="btn neon ghost">Create Ride</a>
+=======
+          <a href="create_ride.php" class="btn neon ghost">Create Ride</a>
+>>>>>>> 33644d9d106479104d10ed3c0f335aa254940175
         <?php endif; ?>
       </article>
     <?php else: ?>

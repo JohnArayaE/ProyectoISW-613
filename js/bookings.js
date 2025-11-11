@@ -103,7 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
         confirmBtn.disabled = true;
 
+<<<<<<< HEAD
         fetch('./actions/BookingsAc.php', {
+=======
+        fetch('actions/BookingsAc.php', {
+>>>>>>> 33644d9d106479104d10ed3c0f335aa254940175
             method: 'POST',
             body: formData
         })

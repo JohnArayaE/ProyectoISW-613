@@ -541,4 +541,53 @@ body{
     transform: translateX(100%);
     opacity: 0;
   }
+<<<<<<< HEAD
+=======
+}
+/* Animaciones para notificaciones */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Estilos para el modal */
+dialog {
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+dialog::backdrop {
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+>>>>>>> 33644d9d106479104d10ed3c0f335aa254940175
 }

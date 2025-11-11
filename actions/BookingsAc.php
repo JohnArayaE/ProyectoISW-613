@@ -152,4 +152,8 @@ function liberarEspacios($conn, $booking) {
         $stmt->close();
     }
 }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 33644d9d106479104d10ed3c0f335aa254940175
