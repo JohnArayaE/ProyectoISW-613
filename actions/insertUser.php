@@ -30,17 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash de contraseña
     $contrasena_hash = password_hash($contrasena, PASSWORD_BCRYPT);
 
-    // Manejo de foto
+       // Manejo de foto
     $foto_ruta = null;
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
         $foto_nombre = uniqid() . '_' . basename($_FILES['photo']['name']);
-        $foto_ruta = '../uploads/' . $foto_nombre;
+        $foto_ruta = 'uploads/' . $foto_nombre;  
         
         if (!file_exists('../uploads')) {
             mkdir('../uploads', 0777, true);
         }
         
-        move_uploaded_file($_FILES['photo']['tmp_name'], $foto_ruta);
+    
+        move_uploaded_file($_FILES['photo']['tmp_name'], '../' . $foto_ruta);
     }
 
     // Insertar usuario
@@ -87,7 +88,7 @@ function enviarCorreoVerificacion($correo_destino, $nombre, $token) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'correosproyecto33@gmail.com';
-        $mail->Password = 'swvk maxw csrj irqb'; // ⬅️ NUEVA CONTRASEÑA
+        $mail->Password = 'swvk maxw csrj irqb'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         $mail->CharSet = 'UTF-8';
@@ -109,7 +110,7 @@ function enviarCorreoVerificacion($correo_destino, $nombre, $token) {
         $mail->isHTML(true);
         $mail->Subject = 'Verifica tu cuenta - Aventones';
         
-        $url_activacion = "http://localhost/ProyectoISW-613/actions/activateAccount.php?token=" . $token;
+        $url_activacion = "http://localhost:8080/ProyectoISW/ProyectoISW-613/actions/activateAccount.php?token=" . $token;
         
         $mail->Body = "
         <html>

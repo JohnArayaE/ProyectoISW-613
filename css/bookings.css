@@ -1,0 +1,544 @@
+:root{
+  --neon:  #BAFF39;
+  --gray:  #6E6E6E;
+  --white: #FFFFFF;
+  --ink:   #121212;
+  --bg:    #f6f7f9;
+
+  --radius-xl: 18px;
+  --radius:    12px;
+  --shadow:    0 20px 50px rgba(0,0,0,.08);
+  --soft:      0 8px 20px rgba(0,0,0,.06);
+
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+*{ box-sizing: border-box; }
+body{
+  margin:0; color:var(--ink);
+  background:
+    radial-gradient(1000px 600px at 10% -10%, rgba(186,255,57,.12), transparent 60%),
+    var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Topbar ===== */
+.bookings-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 28px;
+  background:#fff;
+  box-shadow:var(--soft);
+  border-bottom:1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Izquierda: logo + título */
+.bookings-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink: 0;
+}
+.bookings-logo{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+}
+.bookings-topbar h1{
+  margin:0;
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 900;
+  letter-spacing: .3px;
+  white-space: nowrap;
+}
+
+/* Centro: navegación */
+.main-nav{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.main-nav .nav-links{
+  list-style:none;
+  display:flex;
+  gap:22px;
+  margin:0;
+  padding:0;
+}
+.main-nav .nav-links a{
+  color:#333;
+  text-decoration:none;
+  font-weight:600;
+  padding-bottom:3px;
+  border-bottom:2px solid transparent;
+  transition: color .2s, border-bottom-color .2s;
+  white-space: nowrap;
+}
+.main-nav .nav-links a:hover,
+.main-nav .nav-links a.active{
+  color:var(--neon);
+  border-bottom-color:var(--neon);
+}
+
+/* Derecha: CTA + avatar */
+.right-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink: 0;
+}
+
+/* Botones base */
+.btn{
+  --bg:#eaeaea; --fg:#111; --bd:transparent;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:12px;
+  border:2px solid var(--bd);
+  background: var(--bg);
+  color: var(--fg);
+  font-weight:800;
+  cursor:pointer;
+  transition: transform .06s, filter .2s, box-shadow .2s;
+  white-space: nowrap;
+  font-size: 14px;
+  text-decoration: none;
+  border: none;
+}
+.btn.neon{ --bg:var(--neon); --fg:#000; }
+.btn.neon:hover{ 
+  filter:brightness(.95); 
+  box-shadow:0 10px 26px rgba(186,255,57,.45); 
+  transform: translateY(-1px);
+}
+.btn.neon.ghost{ 
+  --bg:transparent; 
+  --bd:var(--neon); 
+  --fg: var(--neon);
+  border: 2px solid var(--neon);
+}
+.btn.neon.ghost:hover{
+  --bg: var(--neon);
+  --fg: #000;
+}
+.btn.outline{ 
+  --bg:transparent; 
+  --bd:#dedede; 
+  border: 2px solid #dedede;
+}
+.btn.outline:hover{
+  --bd: var(--neon);
+  --fg: var(--neon);
+  border-color: var(--neon);
+}
+.btn.danger{ --bg:#ff4d4f; --fg:#fff; }
+.btn.danger:hover{
+  filter: brightness(0.9);
+  transform: translateY(-1px);
+}
+.btn.success{ --bg:#28a745; --fg:#fff; }
+.btn.success:hover{
+  filter: brightness(0.9);
+  transform: translateY(-1px);
+}
+
+/* Avatar + dropdown */
+.profile-menu{ 
+  position:relative; 
+}
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--neon);
+  cursor:pointer;
+  transition: transform .1s;
+  background: #f3f4f6;
+}
+.avatar:hover{ 
+  transform:scale(1.05); 
+  box-shadow: 0 0 0 3px rgba(186,255,57,.3);
+}
+
+.dropdown{
+  list-style:none;
+  margin:0;
+  padding:8px 0;
+  position:absolute;
+  right:0;
+  top:52px;
+  background:#fff;
+  border:1px solid #eef0f3;
+  border-radius:12px;
+  box-shadow:var(--soft);
+  min-width:180px;
+  display:none;
+  z-index:50;
+  animation: dropdownFade 0.2s ease;
+}
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dropdown.show {
+  display: block;
+}
+.dropdown li a{
+  display:block;
+  padding:12px 16px;
+  text-decoration:none;
+  color:var(--ink);
+  font-weight:600;
+  transition: all 0.2s;
+}
+.dropdown li a:hover{
+  background:#f8f9fa;
+  color:var(--neon);
+  padding-left: 20px;
+}
+
+/* Estilos específicos para el botón de logout */
+.dropdown .logout-btn {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.dropdown .logout-btn:hover {
+  background-color: #dc3545;
+  color: white;
+  padding-left: 16px;
+}
+
+/* ===== Content ===== */
+.bookings-content{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px clamp(16px, 4vw, 32px) 40px;
+  flex: 1;
+  width: 100%;
+}
+
+/* Empty */
+.bookings-empty{
+  background:#fff;
+  border:1px solid #eef0f3;
+  border-radius: var(--radius-xl);
+  text-align:center;
+  padding: 48px 26px;
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  margin: 0 auto;
+}
+.bookings-illu{
+  width:160px;
+  height:120px;
+  margin:0 auto 20px;
+  background:
+    linear-gradient(135deg, rgba(186,255,57,.3), rgba(186,255,57,.1)),
+    linear-gradient(#f2f4f7,#e9edf3);
+  border-radius:18px;
+  box-shadow: inset 0 0 0 2px rgba(186,255,57,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bookings-illu::before {
+  content: "📅";
+  font-size: 48px;
+  opacity: 0.7;
+}
+.bookings-empty h3{
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  color: var(--ink);
+}
+.bookings-empty p{
+  margin: 0 0 24px 0;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* Grid */
+.bookings-grid{
+  display:grid;
+  gap:24px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+}
+
+/* Card */
+.booking-card{
+  position:relative;
+  background:#fff;
+  border:1px solid #eef0f3;
+  border-radius: var(--radius-xl);
+  overflow:hidden;
+  box-shadow: var(--shadow);
+  transition: transform .15s, box-shadow .3s;
+}
+.booking-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px rgba(0,0,0,.12);
+}
+.booking-accent{
+  position:absolute; 
+  left:0; 
+  top:0; 
+  bottom:0; 
+  width:8px;
+  background: linear-gradient(to bottom, #BAFF39, #9ae02e);
+  box-shadow: 0 0 20px rgba(186,255,57,.7);
+}
+
+/* Header del booking */
+.booking-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 20px 16px 20px;
+  gap: 16px;
+}
+
+.booking-route h3{
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.booking-time{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.booking-time i{
+  color: var(--neon);
+}
+
+.booking-price{
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--neon);
+  white-space: nowrap;
+}
+
+/* Status */
+.booking-status{
+  padding: 8px 16px;
+  margin: 0 20px 16px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  display: inline-block;
+}
+
+.status-pendiente{
+  background: rgba(255, 193, 7, 0.15);
+  color: #856404;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.status-aceptada{
+  background: rgba(40, 167, 69, 0.15);
+  color: #155724;
+  border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.status-cancelada{
+  background: rgba(220, 53, 69, 0.15);
+  color: #721c24;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.status-rechazada{
+  background: rgba(220, 53, 69, 0.15);
+  color: #721c24;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.status-completada{
+  background: rgba(23, 162, 184, 0.15);
+  color: #0c5460;
+  border: 1px solid rgba(23, 162, 184, 0.3);
+}
+
+/* Detalles */
+.booking-details{
+  list-style: none;
+  margin: 0;
+  padding: 0 20px 20px 20px;
+  color: #535353;
+  font-size: 14px;
+}
+
+.booking-details li{
+  padding: 8px 0;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.booking-details li:first-child{
+  border-top: none;
+}
+
+.booking-details strong{
+  color: #1c1c1c;
+  font-weight: 600;
+  min-width: 80px;
+}
+
+.booking-details span{
+  text-align: right;
+  flex: 1;
+}
+
+/* Acciones */
+.booking-actions{
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 16px 20px 20px;
+  border-top: 1px solid #f5f5f5;
+  background: #fafafa;
+}
+
+.booking-actions .btn{
+  font-size: 13px;
+  padding: 8px 12px;
+}
+
+/* ===== Modal ===== */
+#confirmModal::backdrop{ 
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(2px);
+}
+#confirmModal{
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  box-shadow: var(--shadow);
+  max-width: 95vw;
+  animation: modalSlideIn 0.3s ease;
+}
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content{
+  padding: 24px;
+  width: min(400px, 92vw);
+}
+
+.modal-content h3{
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.modal-content p{
+  margin: 0 0 24px 0;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.modal-actions{
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+/* ===== Footer ===== */
+.bookings-footer{
+  background: var(--gray);
+  color:#fff;
+  text-align:center;
+  padding: 28px 10px;
+  margin-top: auto;
+  border-top: 3px solid var(--neon);
+}
+.footer-links{ 
+  margin-bottom: 12px; 
+}
+.footer-links a{
+  color:#fff; 
+  text-decoration:none; 
+  margin:0 8px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-links a:hover{ 
+  color: var(--neon); 
+  text-decoration: underline;
+}
+.bookings-footer p{
+  margin: 0;
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+/* Notificaciones */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  z-index: 10000;
+  animation: slideInRight 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notification.success {
+  background-color: #28a745;
+}
+
+.notification.error {
+  background-color: #dc3545;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

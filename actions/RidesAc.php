@@ -263,11 +263,13 @@ function deleteRide($conn, $user_id) {
 /**
  * FUNCIONES AUXILIARES
  */
+// Verificar si el vehículo pertenece al usuario Y ESTÉ ACTIVO
 function vehicleBelongsToUser($conn, $vehicle_id, $user_id) {
-    $sql = "SELECT id FROM vehiculos WHERE id = '$vehicle_id' AND id_chofer = '$user_id'";
+    $sql = "SELECT id FROM vehiculos WHERE id = '$vehicle_id' AND id_chofer = '$user_id' AND estado = 'activo'"; // AGREGADO: AND estado = 'activo'
     $result = mysqli_query($conn, $sql);
     return ($result && mysqli_num_rows($result) > 0);
 }
+
 
 function rideBelongsToUser($conn, $ride_id, $user_id) {
     $sql = "SELECT r.id FROM rides r 
@@ -278,7 +280,7 @@ function rideBelongsToUser($conn, $ride_id, $user_id) {
 }
 
 function getVehicleCapacity($conn, $vehicle_id) {
-    $sql = "SELECT capacidad FROM vehiculos WHERE id = '$vehicle_id'";
+    $sql = "SELECT capacidad FROM vehiculos WHERE id = '$vehicle_id' AND estado = 'activo'"; // AGREGADO: AND estado = 'activo'
     $result = mysqli_query($conn, $sql);
     if ($result && $row = mysqli_fetch_assoc($result)) {
         return $row['capacidad'];

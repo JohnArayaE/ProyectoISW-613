@@ -97,7 +97,7 @@ $foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : 'img/l
              onerror="this.src='img/logo.png'" />
         <ul class="dropdown" id="profileDropdown">
             <li><a href="actions/logout.php" class="logout-btn">Logout</a></li>
-            <li><a href="configuration.php">Configuration</a></li>
+            <li><a href="Configurations.php">Configuration</a></li>
         </ul>
       </div>
     </div>
@@ -214,8 +214,8 @@ $foto_usuario = !empty($_SESSION['user_foto']) ? $_SESSION['user_foto'] : 'img/l
   <footer class="rides-footer">
     <div class="footer-links">
       <a href="vehicles.php">Home</a> |
-      <a href="bookings.php">Bookings</a> |
-      <a href="rides.php" data-role-only="driver">Rides</a>
+      <a href="rides.php" data-role-only="driver">Rides</a> |
+      <a href="bookings.php">Bookings</a> 
     </div>
     <p>&copy; Aventones.com</p>
   </footer>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registro — Aventones</title>
-  <link rel="stylesheet" href="css/registration.css">
+  <link rel="stylesheet" href="css/registration.css?v=2">
   <script src="js/registration.js" defer></script>
 </head>
 <body>
@@ -82,14 +82,14 @@
             <button type="submit">Sign Up</button>
           </div>
 
-          <div class="links-row span-2">
-            <p class="login-link">
-                Already a user? <a href="Login.php">Login here</a>
-            </p>
-            <p class="registerDriver-link">
-                Register as driver? <a href="RegisterDriver.php">Click here</a>
-            </p>
-            </div>
+      <div class="links-row span-2">
+    <p class="login-link">
+        Already a user? <a href="Login.php">Login here</a>
+    </p>
+    <p class="login-link">
+        Register as driver? <a href="RegisterDriver.php">Click here</a>
+    </p>
+</div>
         </div>
       </form>
     </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registro Admin — Aventones</title>
-  <link rel="stylesheet" href="css/registration.css">
+  <link rel="stylesheet" href="css/registration.css?v=2">
   <script src="js/registration.js" defer></script>
 </head>
 <body>
@@ -82,13 +82,6 @@
           <div class="actions span-2">
             <button type="submit">Sign Up as Admin</button>
           </div>
-
-          <div class="links-row span-2">
-            <p class="login-link">
-                Already a user? <a href="Login.php">Login here</a>
-            </p>
-            <p class="registerCustomer-link">
-                Register as a Customer? <a href="Registration.php">Click here</a>
             </p>
           </div>
         </div>

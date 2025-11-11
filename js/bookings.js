@@ -1,4 +1,3 @@
-// Bookings JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     let currentBookingId = null;
     let currentAction = null;
@@ -95,51 +94,51 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function performAction(bookingId, action) {
-    const formData = new FormData();
-    formData.append('booking_id', bookingId);
-    formData.append('action', action);
+        const formData = new FormData();
+        formData.append('booking_id', bookingId);
+        formData.append('action', action);
 
-    // Mostrar loading
-    const originalText = confirmBtn.innerHTML;
-    confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    confirmBtn.disabled = true;
+        // Mostrar loading
+        const originalText = confirmBtn.innerHTML;
+        confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        confirmBtn.disabled = true;
 
-    // USAR LA RUTA CORRECTA - está en la carpeta actions/
-    fetch('actions/BookingsAc.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
-        
-        if (!response.ok) {
-            throw new Error('HTTP error! status: ' + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Response data:', data);
-        if (data.success) {
-            showNotification(data.message, 'success');
-            // Recargar la página después de 1.5 segundos
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
-        } else {
-            showNotification(data.message, 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Fetch error:', error);
-        showNotification('Error processing request: ' + error.message, 'error');
-    })
-    .finally(() => {
-        // Restaurar botón
-        confirmBtn.innerHTML = originalText;
-        confirmBtn.disabled = false;
-    });
-}
+        fetch('./actions/BookingsAc.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Response text:', text);
+            
+            // Procesar respuesta en texto plano
+            if (text.startsWith('SUCCESS:')) {
+                const message = text.substring(8); // Remover "SUCCESS: "
+                showNotification(message, 'success');
+                // Recargar la página después de 1.5 segundos
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else if (text.startsWith('ERROR:')) {
+                const message = text.substring(6); // Remover "ERROR: "
+                showNotification(message, 'error');
+            } else {
+                showNotification('Respuesta no válida del servidor', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            showNotification('Error de conexión: ' + error.message, 'error');
+        })
+        .finally(() => {
+            // Restaurar botón
+            confirmBtn.innerHTML = originalText;
+            confirmBtn.disabled = false;
+        });
+    }
 
     // Mostrar notificación
     function showNotification(message, type) {
@@ -149,6 +148,23 @@ document.addEventListener('DOMContentLoaded', function() {
         notification.innerHTML = `
             <i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i>
             <span>${message}</span>
+        `;
+
+        // Estilos para las notificaciones
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+            animation: slideInRight 0.3s ease;
+            ${type === 'success' ? 'background: #28a745;' : 'background: #dc3545;'}
         `;
 
         document.body.appendChild(notification);

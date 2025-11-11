@@ -85,6 +85,26 @@ if ($_SESSION['user_rol'] === 'ADMIN') {
                         <p class="config-subtitle">Update your personal information</p>
                     </div>
 
+                    <!-- === AQUÍ VAN LOS MENSAJES === -->
+                    <?php if (isset($_SESSION['mensaje_exito'])): ?>
+                        <div class="alert alert-success">
+                            <?php 
+                            echo $_SESSION['mensaje_exito'];
+                            unset($_SESSION['mensaje_exito']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['error_update'])): ?>
+                        <div class="alert alert-error">
+                            <?php 
+                            echo $_SESSION['error_update'];
+                            unset($_SESSION['error_update']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    
+
                     <!-- Formulario Principal -->
                     <form action="actions/updateProfile.php" method="post" enctype="multipart/form-data" autocomplete="off" class="form">
                         <div class="form-grid">
@@ -151,7 +171,6 @@ if ($_SESSION['user_rol'] === 'ADMIN') {
                                 </div>
                                 <p class="photo-hint">JPG, PNG or GIF. Max 5MB.</p>
                             </div>
-
                             <!-- Botones de acción -->
                             <div class="actions span-2">
                                 <button type="submit" class="btn-primary">

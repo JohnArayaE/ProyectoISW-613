@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registro Conductor — Aventones</title>
-  <link rel="stylesheet" href="css/registration.css">
+  <link rel="stylesheet" href="css/registration.css?v=2">
   <script src="js/registration.js" defer></script>
 </head>
 <body>
@@ -15,7 +15,7 @@
       </div>
 
       <h1 class="login-title">AVENTONES</h1>
-      <h2 class="section-title">Register Driver</h2>
+      <h2 class="section-title driver-title">Register Driver</h2>
 
       <!-- Form con estructura para 2 columnas -->
       <form action="actions/insertUser.php" method="post" enctype="multipart/form-data" autocomplete="off" class="form">
@@ -83,14 +83,15 @@
             <button type="submit">Sign Up as Driver</button>
           </div>
 
-          <div class="links-row span-2">
-            <p class="login-link">
-                Already a user? <a href="Login.php">Login here</a>
-            </p>
-            <p class="registerCustomer-link">
-                Register as a Customer? <a href="Registration.php">Click here</a>
-            </p>
-          </div>
+         <div class="links-row span-2">
+  <p class="login-link">
+    Already a user? <a href="Login.php">Login here</a>
+  </p>
+  <p class="login-link">
+    Register as a Customer? <a href="Registration.php">Click here</a>
+  </p>
+</div>
+
         </div>
       </form>
     </div>
